@@ -1,0 +1,41 @@
+{
+  "title": "Support",
+  "createTicket": "Create Ticket",
+  "listTickets": "List Tickets",
+  "listingTickets": "Listing Tickets",
+  "ticketId": "Ticket ID",
+  "editingTicket": "Editing Ticket ID",
+  "creatingNewTicket": "Creating New Ticket",
+  "ticketNotFound": "Ticket not found",
+  "updatedAt": "Updated At",
+  "updateStatus": "Update Status",
+  "table": {
+    "id": "ID",
+    "name": "Name",
+    "email": "Email",
+    "subject": "Subject",
+    "status": "Status",
+    "createdAt": "Created At"
+  },
+  "status": {
+    "open": "Open",
+    "inProgress": "In Progress",
+    "resolved": "Resolved",
+    "closed": "Closed"
+  },
+  "form": {
+    "name": "Name",
+    "email": "Email",
+    "subject": "Subject",
+    "message": "Message"
+  },
+  "message": {
+    "required": "This field is required",
+    "email_error": "Please enter a valid email address",
+    "create_ticket_failed": "Failed to create ticket. Please try again."
+  },
+  "button": {
+    "submit": "Submit",
+    "update": "Update"
+  }
+}

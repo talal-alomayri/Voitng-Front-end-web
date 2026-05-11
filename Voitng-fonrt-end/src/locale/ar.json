@@ -1,0 +1,41 @@
+{
+  "title": "الدعم",
+  "createTicket": "إنشاء تذكرة",
+  "listTickets": "قائمة التذاكر",
+  "listingTickets": "عرض التذاكر",
+  "ticketId": "رقم التذكرة",
+  "editingTicket": "تعديل التذكرة رقم",
+  "creatingNewTicket": "إنشاء تذكرة جديدة",
+  "ticketNotFound": "التذكرة غير موجودة",
+  "updatedAt": "تاريخ التحديث",
+  "updateStatus": "تحديث الحالة",
+  "table": {
+    "id": "المعرف",
+    "name": "الاسم",
+    "email": "البريد الإلكتروني",
+    "subject": "الموضوع",
+    "status": "الحالة",
+    "createdAt": "تاريخ الإنشاء"
+  },
+  "status": {
+    "open": "مفتوحة",
+    "inProgress": "قيد المعالجة",
+    "resolved": "محلولة",
+    "closed": "مغلقة"
+  },
+  "form": {
+    "name": "الاسم",
+    "email": "البريد الإلكتروني",
+    "subject": "الموضوع",
+    "message": "الرسالة"
+  },
+  "message": {
+    "required": "هذا الحقل مطلوب",
+    "email_error": "يرجى إدخال عنوان بريد إلكتروني صالح",
+    "create_ticket_failed": "فشل إنشاء التذكرة. يرجى المحاولة مرة أخرى."
+  },
+  "button": {
+    "submit": "إرسال",
+    "update": "تحديث"
+  }
+}
