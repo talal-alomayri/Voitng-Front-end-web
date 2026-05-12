@@ -1,41 +1,50 @@
 {
-  "title": "Support",
-  "createTicket": "Create Ticket",
-  "listTickets": "List Tickets",
-  "listingTickets": "Listing Tickets",
-  "ticketId": "Ticket ID",
-  "editingTicket": "Editing Ticket ID",
-  "creatingNewTicket": "Creating New Ticket",
-  "ticketNotFound": "Ticket not found",
-  "updatedAt": "Updated At",
-  "updateStatus": "Update Status",
+  "title": "Voting System",
+  "footerText": "Voting System ©2026 Created by Moenix",
+  "createPoll": "Create Poll",
+  "listPolls": "My Polls",
+  "creatingNewPoll": "Create a New Poll",
+  "pollCreated": "Poll Created Successfully!",
+  "scanToVote": "Scan to vote, or share this link:",
+  "createNew": "Create Another Poll",
+  "pollNotFound": "Poll not found",
+  "totalVotes": "Total Votes",
+  "votes": "votes",
+  "integrationText": "Host actions: Send final results to your workspace",
+  "pollsList": "My Polls",
   "table": {
-    "id": "ID",
-    "name": "Name",
-    "email": "Email",
-    "subject": "Subject",
-    "status": "Status",
-    "createdAt": "Created At"
-  },
-  "status": {
-    "open": "Open",
-    "inProgress": "In Progress",
-    "resolved": "Resolved",
-    "closed": "Closed"
+    "question": "Question",
+    "totalVotes": "Total Votes",
+    "createdAt": "Created At",
+    "actions": "Actions"
   },
   "form": {
-    "name": "Name",
-    "email": "Email",
-    "subject": "Subject",
-    "message": "Message"
+    "question": "Poll Question",
+    "options": "Options",
+    "placeholder_question": "e.g. What is your favorite programming language?",
+    "placeholder_option": "Option"
   },
   "message": {
     "required": "This field is required",
-    "email_error": "Please enter a valid email address",
-    "create_ticket_failed": "Failed to create ticket. Please try again."
+    "load_failed": "Failed to load data",
+    "create_poll_success": "Poll created successfully!",
+    "create_poll_failed": "Failed to create poll",
+    "min_options": "At least 2 options are required",
+    "required_option": "Please input an option or delete this field.",
+    "vote_success": "Vote submitted successfully!",
+    "vote_failed": "Failed to submit vote",
+    "integration_success": "Results sent successfully!",
+    "integration_failed": "Failed to send results",
+    "link_copied": "Link copied to clipboard!",
+    "copy_failed": "Failed to copy link"
   },
   "button": {
-    "submit": "Submit",
-    "update": "Update"
+    "submitVote": "Submit Vote",
+    "add_option": "Add Option",
+    "create_poll": "Create Poll & Generate QR",
+    "sendResults": "Send Results (Email / ClickUp)",
+    "copyLink": "Copy Link",
+    "viewResults": "Results",
+    "createNewPoll": "Create New Poll"
   }
 }

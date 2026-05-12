@@ -25,7 +25,7 @@ function PollList() {
       setPolls(data);
     } catch (error) {
       console.error("Error fetching polls:", error);
-      message.error(t("message.load_failed", "Failed to load polls"));
+      message.error(t("message.load_failed"));
     } finally {
       setLoading(false);
     }
@@ -35,13 +35,13 @@ function PollList() {
   const copyVotingLink = (pollId: string) => {
     const url = `${window.location.origin}/poll/${pollId}`;
     navigator.clipboard.writeText(url)
-      .then(() => message.success(t("message.link_copied", "Link copied to clipboard!")))
-      .catch(() => message.error(t("message.copy_failed", "Failed to copy link")));
+      .then(() => message.success(t("message.link_copied")))
+      .catch(() => message.error(t("message.copy_failed")));
   };
 
   const columns: ColumnsType<Poll> = [
     {
-      title: t("table.question", "Question"),
+      title: t("table.question"),
       dataIndex: "question",
       key: "question",
       render: (question: string, record: Poll) => (
@@ -54,20 +54,20 @@ function PollList() {
       ),
     },
     {
-      title: t("table.totalVotes", "Total Votes"),
+      title: t("table.totalVotes"),
       dataIndex: "totalVotes",
       key: "totalVotes",
       align: "center",
       render: (total: number) => total || 0,
     },
     {
-      title: t("table.createdAt", "Created At"),
+      title: t("table.createdAt"),
       dataIndex: "createdAt",
       key: "createdAt",
       render: (date: string) => date ? new Date(date).toLocaleString() : "-",
     },
     {
-      title: t("table.actions", "Actions"),
+      title: t("table.actions"),
       key: "actions",
       render: (_, record: Poll) => (
         <Space>
@@ -75,7 +75,7 @@ function PollList() {
             type="text" 
             icon={<CopyOutlined />} 
             onClick={() => copyVotingLink(record.id)}
-            title={t("button.copyLink", "Copy Link")}
+            title={t("button.copyLink")}
           />
           <Button 
             type="primary" 
@@ -84,7 +84,7 @@ function PollList() {
             icon={<BarChartOutlined />} 
             onClick={() => navigate(`/poll/${record.id}`)}
           >
-            {t("button.viewResults", "Results")}
+            {t("button.viewResults")}
           </Button>
         </Space>
       ),
@@ -95,10 +95,10 @@ function PollList() {
     <div style={{ margin: "24px" }}>
       <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "16px" }}>
         <Typography.Title level={4}>
-          {t("pollsList", "My Polls")}
+          {t("pollsList")}
         </Typography.Title>
         <Button type="primary" onClick={() => navigate("/create")}>
-          {t("button.createNewPoll", "Create New Poll")}
+          {t("button.createNewPoll")}
         </Button>
       </div>
 

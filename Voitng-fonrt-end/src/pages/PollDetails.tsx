@@ -41,7 +41,7 @@ function PollDetails() {
       setPoll(data);
     } catch (error) {
       console.error("Error fetching poll:", error);
-      message.error(t("message.load_failed", "Failed to load poll details"));
+      message.error(t("message.load_failed"));
     } finally {
       setLoading(false);
     }
@@ -57,10 +57,10 @@ function PollDetails() {
       setPoll(updatedPoll); // تحديث بيانات الاستطلاع بالنتائج الجديدة
       setHasVoted(true);
       localStorage.setItem(`voted_${pollId}`, "true"); // حفظ حالة التصويت محلياً لمنع التكرار (اختياري)
-      message.success(t("message.vote_success", "Vote submitted successfully!"));
+      message.success(t("message.vote_success"));
     } catch (error) {
       console.error("Error submitting vote:", error);
-      message.error(t("message.vote_failed", "Failed to submit vote"));
+      message.error(t("message.vote_failed"));
     } finally {
       setIsVoting(false);
     }
@@ -73,10 +73,10 @@ function PollDetails() {
     try {
       // استدعاء دالة الـ Lambda الخاصة بالـ Integration
       await sendPollResults(pollId);
-      message.success(t("message.integration_success", "Results sent successfully!"));
+      message.success(t("message.integration_success"));
     } catch (error) {
       console.error("Error sending results:", error);
-      message.error(t("message.integration_failed", "Failed to send results"));
+      message.error(t("message.integration_failed"));
     } finally {
       setSendingResults(false);
     }
@@ -96,7 +96,7 @@ function PollDetails() {
     return (
       <Row justify="center" style={{ padding: "14px" }}>
         <Col xs={24} md={16}>
-          <Card>{t("pollNotFound", "Poll not found")}</Card>
+          <Card>{t("pollNotFound")}</Card>
         </Col>
       </Row>
     );
@@ -137,14 +137,14 @@ function PollDetails() {
                 disabled={!selectedOption}
                 style={{ marginTop: "16px" }}
               >
-                {t("button.submitVote", "Submit Vote")}
+                {t("button.submitVote")}
               </Button>
             </div>
           ) : (
             /* حالة النتائج: عرض نسبة التصويت لكل خيار */
             <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
               <Text strong style={{ fontSize: "16px" }}>
-                {t("totalVotes", "Total Votes")}: {poll.totalVotes}
+                {t("totalVotes")}: {poll.totalVotes}
               </Text>
               
               {poll.options.map((option) => {
@@ -156,7 +156,7 @@ function PollDetails() {
                   <div key={option.id}>
                     <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "4px" }}>
                       <Text>{option.text}</Text>
-                      <Text type="secondary">{option.votesCount} {t("votes", "votes")}</Text>
+                      <Text type="secondary">{option.votesCount} {t("votes")}</Text>
                     </div>
                     <Progress percent={percent} status="active" strokeColor="#15514F" />
                   </div>
@@ -168,14 +168,14 @@ function PollDetails() {
               {/* زر الـ Integration المطلوب في التاسك */}
               <div style={{ textAlign: "center" }}>
                 <Text type="secondary" style={{ display: "block", marginBottom: "12px" }}>
-                  {t("integrationText", "Host actions: Send final results to your workspace")}
+                  {t("integrationText")}
                 </Text>
                 <Button 
                   type="dashed" 
                   onClick={handleSendIntegration}
                   loading={sendingResults}
                 >
-                  {t("button.sendResults", "Send Results (Email / ClickUp)")}
+                  {t("button.sendResults")}
                 </Button>
               </div>
             </div>

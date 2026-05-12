@@ -1,41 +1,50 @@
 {
-  "title": "الدعم",
-  "createTicket": "إنشاء تذكرة",
-  "listTickets": "قائمة التذاكر",
-  "listingTickets": "عرض التذاكر",
-  "ticketId": "رقم التذكرة",
-  "editingTicket": "تعديل التذكرة رقم",
-  "creatingNewTicket": "إنشاء تذكرة جديدة",
-  "ticketNotFound": "التذكرة غير موجودة",
-  "updatedAt": "تاريخ التحديث",
-  "updateStatus": "تحديث الحالة",
+  "title": "نظام التصويت",
+  "footerText": "نظام التصويت ©2026 تم التطوير بواسطة Moenix",
+  "createPoll": "إنشاء استطلاع",
+  "listPolls": "استطلاعاتي",
+  "creatingNewPoll": "إنشاء استطلاع جديد",
+  "pollCreated": "تم إنشاء الاستطلاع بنجاح!",
+  "scanToVote": "امسح الرمز للتصويت، أو شارك هذا الرابط:",
+  "createNew": "إنشاء استطلاع آخر",
+  "pollNotFound": "الاستطلاع غير موجود",
+  "totalVotes": "إجمالي الأصوات",
+  "votes": "أصوات",
+  "integrationText": "إجراءات المضيف: إرسال النتائج النهائية إلى مساحة عملك",
+  "pollsList": "قائمة الاستطلاعات",
   "table": {
-    "id": "المعرف",
-    "name": "الاسم",
-    "email": "البريد الإلكتروني",
-    "subject": "الموضوع",
-    "status": "الحالة",
-    "createdAt": "تاريخ الإنشاء"
-  },
-  "status": {
-    "open": "مفتوحة",
-    "inProgress": "قيد المعالجة",
-    "resolved": "محلولة",
-    "closed": "مغلقة"
+    "question": "السؤال",
+    "totalVotes": "إجمالي الأصوات",
+    "createdAt": "تاريخ الإنشاء",
+    "actions": "الإجراءات"
   },
   "form": {
-    "name": "الاسم",
-    "email": "البريد الإلكتروني",
-    "subject": "الموضوع",
-    "message": "الرسالة"
+    "question": "سؤال الاستطلاع",
+    "options": "الخيارات",
+    "placeholder_question": "مثلاً: ما هي لغة البرمجة المفضلة لديك؟",
+    "placeholder_option": "خيار"
   },
   "message": {
     "required": "هذا الحقل مطلوب",
-    "email_error": "يرجى إدخال عنوان بريد إلكتروني صالح",
-    "create_ticket_failed": "فشل إنشاء التذكرة. يرجى المحاولة مرة أخرى."
+    "load_failed": "فشل تحميل البيانات",
+    "create_poll_success": "تم إنشاء الاستطلاع بنجاح!",
+    "create_poll_failed": "فشل إنشاء الاستطلاع",
+    "min_options": "يجب إضافة خيارين على الأقل",
+    "required_option": "يرجى إدخال خيار أو حذف هذا الحقل.",
+    "vote_success": "تم إرسال تصويتك بنجاح!",
+    "vote_failed": "فشل إرسال التصويت",
+    "integration_success": "تم إرسال النتائج بنجاح!",
+    "integration_failed": "فشل إرسال النتائج",
+    "link_copied": "تم نسخ الرابط إلى الحافظة!",
+    "copy_failed": "فشل نسخ الرابط"
   },
   "button": {
-    "submit": "إرسال",
-    "update": "تحديث"
+    "submitVote": "إرسال التصويت",
+    "add_option": "إضافة خيار",
+    "create_poll": "إنشاء الاستطلاع وتوليد رمز QR",
+    "sendResults": "إرسال النتائج (البريد الإلكتروني / ClickUp)",
+    "copyLink": "نسخ الرابط",
+    "viewResults": "النتائج",
+    "createNewPoll": "إنشاء استطلاع جديد"
   }
 }

@@ -18,13 +18,16 @@ function App() {
   const { defaultAlgorithm, darkAlgorithm } = theme;
 
   useEffect(() => {
-    i18n.changeLanguage(language);
-  }, [language, i18n]);
+    const savedLanguage = localStorage.getItem("language") || Language.ENGLISH;
+    if (i18n.language !== savedLanguage) {
+      i18n.changeLanguage(savedLanguage);
+    }
+  }, [i18n]);
 
   return (
     <I18nextProvider i18n={i18n}>
       <ConfigProvider
-        direction={language === Language.ARABIC ? "rtl" : "ltr"}
+        direction={i18n.language === Language.ARABIC ? "rtl" : "ltr"}
         theme={{
           algorithm:
             themeMode === Theme.DARK ? darkAlgorithm : defaultAlgorithm,

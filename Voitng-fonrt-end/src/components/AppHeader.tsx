@@ -38,10 +38,10 @@ export default function AppHeader() {
           <Text style={{ fontSize: "25px" }}>{t("title")}</Text>
           <Space>
             <Button type="link" onClick={() => navigate("/create")}>
-              {t("createTicket")}
+              {t("createPoll")}
             </Button>
             <Button type="link" onClick={() => navigate("/list")}>
-              {t("listTickets")}
+              {t("listPolls")}
             </Button>
           </Space>
         </Space>

@@ -79,10 +79,10 @@ function CreatePoll() {
             >
               <Form.Item
                 name="question"
-                label={t("form.question", "Poll Question")}
-                rules={[{ required: true, message: t("message.required", "Please enter the question") }]}
+                label={t("form.question")}
+                rules={[{ required: true, message: t("message.required") }]}
               >
-                <Input placeholder="e.g. What is your favorite programming language?" />
+                <Input placeholder={t("form.placeholder_question")} />
               </Form.Item>
 
               {/* القائمة الديناميكية للخيارات */}
@@ -92,7 +92,7 @@ function CreatePoll() {
                   {
                     validator: async (_, options) => {
                       if (!options || options.length < 2) {
-                        return Promise.reject(new Error(t("message.min_options", "At least 2 options are required")));
+                        return Promise.reject(new Error(t("message.min_options")));
                       }
                     },
                   },
@@ -112,12 +112,12 @@ function CreatePoll() {
                             {
                               required: true,
                               whitespace: true,
-                              message: t("message.required_option", "Please input an option or delete this field."),
+                              message: t("message.required_option"),
                             },
                           ]}
                           noStyle
                         >
-                          <Input placeholder={`Option ${index + 1}`} style={{ width: '90%' }} />
+                          <Input placeholder={`${t("form.placeholder_option")} ${index + 1}`} style={{ width: '90%' }} />
                         </Form.Item>
                         {fields.length > 2 ? (
                           <MinusCircleOutlined
