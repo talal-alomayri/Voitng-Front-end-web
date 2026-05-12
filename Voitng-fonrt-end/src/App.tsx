@@ -11,8 +11,6 @@ const { Content } = Layout;
 
 function App() {
   const { i18n } = useTranslation();
-  const language: Language =
-    (localStorage.getItem("language") as Language) || Language.ENGLISH;
   const themeMode: Theme =
     (localStorage.getItem("theme") as Theme) || Theme.LIGHT;
   const { defaultAlgorithm, darkAlgorithm } = theme;
