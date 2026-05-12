@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import CreatePoll from "./pages/CreatePoll";
-import PollList from "./pages/TicketList";
+import PollList from "./pages/PollList";
 import PollDetails from "./pages/PollDetails";
 
 export function AppRoute() {

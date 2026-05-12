@@ -2,37 +2,42 @@ import { Card, Col, Row, Radio, Button, message, Progress, Space, Typography, Di
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
-import { getPoll, submitVote, sendPollResults, type Poll } from "../api/ticketApi"; // افترض وجود هذه الدوال
+import { getPoll, submitVote, sendPollResults, type Poll } from "../api/PollApi"; // افترض وجود هذه الدوال
 
 const { Title, Text } = Typography;
 
 function PollDetails() {
+  // جلب المعرف الخاص بالاستطلاع من رابط الصفحة
   const pollId = useParams().id;
+  // استخدام دالة الترجمة
   const { t } = useTranslation();
-  
+
+  // حالات لتخزين بيانات الاستطلاع وحالة التحميل
   const [poll, setPoll] = useState<Poll | null>(null);
   const [loading, setLoading] = useState(false);
-  
-  // حالات جديدة لإدارة التصويت
+
+  // حالات لإدارة خيار التصويت المحدد وحالة الإرسال
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [isVoting, setIsVoting] = useState(false);
-  
-  // حالة لمعرفة هل المستخدم قام بالتصويت ليتم عرض النتائج بدلاً من نموذج التصويت
+
+  // حالة لمعرفة ما إذا كان المستخدم قد صوت بالفعل لعرض النتائج
   const [hasVoted, setHasVoted] = useState(false);
-  
-  // حالة لزر الـ Integration
+
+  // حالة لزر إرسال النتائج (Integration)
   const [sendingResults, setSendingResults] = useState(false);
 
+  // جلب بيانات الاستطلاع عند تحميل الصفحة أو تغيير المعرف
   useEffect(() => {
     if (pollId) {
       fetchPoll();
-      
-      // يمكنك هنا التحقق من localStorage إذا كان المستخدم قد صوت مسبقاً في هذا الاستطلاع
+
+      // التحقق من التخزين المحلي لمعرفة ما إذا كان المستخدم قد صوت مسبقاً
       const userVoted = localStorage.getItem(`voted_${pollId}`);
       if (userVoted) setHasVoted(true);
     }
   }, [pollId]);
 
+  // دالة لجلب بيانات الاستطلاع من الخادم
   const fetchPoll = async () => {
     if (!pollId) return;
     setLoading(true);
@@ -47,16 +52,18 @@ function PollDetails() {
     }
   };
 
+  // دالة لإرسال صوت المستخدم
   const handleVoteSubmit = async () => {
     if (!pollId || !selectedOption) return;
-    
+
     setIsVoting(true);
     try {
-      // إرسال التصويت للـ Backend
+      // إرسال التصويت وتحديث البيانات بالنتائج الجديدة
       const updatedPoll = await submitVote(pollId, selectedOption);
-      setPoll(updatedPoll); // تحديث بيانات الاستطلاع بالنتائج الجديدة
+      setPoll(updatedPoll);
       setHasVoted(true);
-      localStorage.setItem(`voted_${pollId}`, "true"); // حفظ حالة التصويت محلياً لمنع التكرار (اختياري)
+      // حفظ حالة التصويت محلياً
+      localStorage.setItem(`voted_${pollId}`, "true");
       message.success(t("message.vote_success"));
     } catch (error) {
       console.error("Error submitting vote:", error);
@@ -66,12 +73,12 @@ function PollDetails() {
     }
   };
 
+  // دالة لإرسال النتائج إلى أنظمة خارجية (مثل البريد أو ClickUp)
   const handleSendIntegration = async () => {
     if (!pollId) return;
-    
+
     setSendingResults(true);
     try {
-      // استدعاء دالة الـ Lambda الخاصة بالـ Integration
       await sendPollResults(pollId);
       message.success(t("message.integration_success"));
     } catch (error) {
@@ -82,6 +89,7 @@ function PollDetails() {
     }
   };
 
+  // عرض حالة التحميل
   if (loading) {
     return (
       <Row justify="center" style={{ padding: "14px" }}>
@@ -92,6 +100,7 @@ function PollDetails() {
     );
   }
 
+  // عرض رسالة في حال عدم العثور على الاستطلاع
   if (!poll) {
     return (
       <Row justify="center" style={{ padding: "14px" }}>
@@ -106,21 +115,23 @@ function PollDetails() {
     <Row justify="center" style={{ padding: "14px" }}>
       <Col xs={24} md={16} lg={12}>
         <Card>
+          {/* سؤال الاستطلاع */}
           <Title level={3}>{poll.question}</Title>
           <Divider />
 
           {!hasVoted ? (
-            /* حالة التصويت: عرض الخيارات للمستخدم */
+            /* واجهة التصويت: تظهر للمستخدم الذي لم يصوت بعد ليختار أحد الخيارات */
             <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-              <Radio.Group 
-                onChange={(e) => setSelectedOption(e.target.value)} 
+              {/* مجموعة أزرار الاختيار (Radio Group) لعرض الخيارات */}
+              <Radio.Group
+                onChange={(e) => setSelectedOption(e.target.value)}
                 value={selectedOption}
               >
                 <Space direction="vertical" style={{ width: "100%" }}>
                   {poll.options.map((option) => (
-                    <Radio 
-                      key={option.id} 
-                      value={option.id} 
+                    <Radio
+                      key={option.id}
+                      value={option.id}
                       style={{ fontSize: "16px", padding: "8px 0" }}
                     >
                       {option.text}
@@ -128,11 +139,12 @@ function PollDetails() {
                   ))}
                 </Space>
               </Radio.Group>
-              
-              <Button 
-                type="primary" 
-                size="large" 
-                onClick={handleVoteSubmit} 
+
+              {/* زر إرسال التصويت: يتم تعطيله إذا لم يتم اختيار أي خيار */}
+              <Button
+                type="primary"
+                size="large"
+                onClick={handleVoteSubmit}
                 loading={isVoting}
                 disabled={!selectedOption}
                 style={{ marginTop: "16px" }}
@@ -141,37 +153,42 @@ function PollDetails() {
               </Button>
             </div>
           ) : (
-            /* حالة النتائج: عرض نسبة التصويت لكل خيار */
+            /* واجهة النتائج: تظهر للمستخدم بعد إتمام عملية التصويت بنجاح */
             <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+              {/* عرض إجمالي عدد الأصوات في الاستطلاع */}
               <Text strong style={{ fontSize: "16px" }}>
                 {t("totalVotes")}: {poll.totalVotes}
               </Text>
-              
+
+              {/* حلقة تكرار لعرض كل خيار مع شريط التقدم (Progress Bar) الذي يمثل نسبته */}
               {poll.options.map((option) => {
-                const percent = poll.totalVotes === 0 
-                  ? 0 
+                // حساب النسبة المئوية لكل خيار
+                const percent = poll.totalVotes === 0
+                  ? 0
                   : Math.round((option.votesCount / poll.totalVotes) * 100);
-                  
+
                 return (
                   <div key={option.id}>
                     <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "4px" }}>
                       <Text>{option.text}</Text>
+                      {/* عرض عدد الأصوات لكل خيار بجانب اسمه */}
                       <Text type="secondary">{option.votesCount} {t("votes")}</Text>
                     </div>
+                    {/* شريط التقدم الملون لإظهار النسبة بشكل مرئي */}
                     <Progress percent={percent} status="active" strokeColor="#15514F" />
                   </div>
                 );
               })}
 
               <Divider />
-              
-              {/* زر الـ Integration المطلوب في التاسك */}
+
+              {/* قسم خاص للمسؤولين أو منشئي الاستطلاع لإرسال النتائج النهائية */}
               <div style={{ textAlign: "center" }}>
                 <Text type="secondary" style={{ display: "block", marginBottom: "12px" }}>
                   {t("integrationText")}
                 </Text>
-                <Button 
-                  type="dashed" 
+                <Button
+                  type="dashed"
                   onClick={handleSendIntegration}
                   loading={sendingResults}
                 >

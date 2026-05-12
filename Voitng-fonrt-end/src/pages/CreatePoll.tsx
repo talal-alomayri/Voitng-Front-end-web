@@ -5,78 +5,85 @@ import { useTranslation } from "react-i18next";
 import { useForm } from "antd/es/form/Form";
 import { QRCodeSVG } from "qrcode.react";
 // افترض أنك قمت بتعديل api.ts ليحتوي على هذه الدالة والنوع
-import { createPoll, type CreatePollDto } from "../api/ticketApi"; 
+import { createPoll, type CreatePollDto } from "../api/PollApi";
 
 const { Title, Text } = Typography;
 
 function CreatePoll() {
+  // استخدام دالة الترجمة
   const { t } = useTranslation();
+  // لاستخدام رسائل التنبيه
   const [messageApi, contextHolder] = message.useMessage();
+  // لإدارة النموذج
   const [form] = useForm();
-  
-  // حالة لحفظ الـ ID بعد نجاح الإنشاء وعرض الـ QR Code
+
+  // حالة لحفظ المعرف بعد نجاح الإنشاء لعرض الـ QR Code
   const [createdPollId, setCreatedPollId] = useState<string | null>(null);
 
+  // دالة تُنفذ عند إرسال النموذج
   const onFinish = (values: { question: string; options: string[] }) => {
-    // تنسيق البيانات لتتطابق مع الـ DTO المتوقع
+    // تجهيز البيانات
     const pollData: CreatePollDto = {
       question: values.question,
-      options: values.options.filter(opt => opt && opt.trim() !== ""), // تنظيف الخيارات الفارغة
+      options: values.options.filter(opt => opt && opt.trim() !== ""),
     };
 
+    // إنشاء الاستطلاع عبر الـ API
     createPoll(pollData)
       .then((newPoll) => {
-        messageApi.success(t("message.create_poll_success", "Poll created successfully!"));
-        setCreatedPollId(newPoll.id); // هذا سيغير الواجهة لعرض الـ QR
+        messageApi.success(t("message.create_poll_success"));
+        setCreatedPollId(newPoll.id);
       })
       .catch((error) => {
         console.error("Error creating poll:", error);
-        messageApi.error(t("message.create_poll_failed", "Failed to create poll"));
+        messageApi.error(t("message.create_poll_failed"));
       });
   };
 
+  // رابط التصويت المولد
   const votingUrl = createdPollId ? `${window.location.origin}/poll/${createdPollId}` : "";
 
   return (
     <Row justify="center" style={{ padding: "14px" }}>
       {contextHolder}
       <Col xs={24} md={14} lg={12}>
-        <Card title={t("creatingNewPoll", "Create a New Poll")}>
-          
-          {/* إذا تم الإنشاء بنجاح، نعرض الـ QR Code */}
+        <Card title={t("creatingNewPoll")}>
+
+          {/* واجهة النجاح وعرض الـ QR Code */}
           {createdPollId ? (
             <div style={{ textAlign: "center", padding: "20px 0" }}>
-              <Title level={4}>{t("pollCreated", "Poll Created Successfully!")}</Title>
+              <Title level={4}>{t("pollCreated")}</Title>
               <div style={{ background: "white", padding: "16px", display: "inline-block", borderRadius: "8px", marginBottom: "16px" }}>
                 <QRCodeSVG value={votingUrl} size={200} />
               </div>
               <div>
-                <Text>{t("scanToVote", "Scan to vote, or share this link:")}</Text>
+                <Text>{t("scanToVote")}</Text>
                 <br />
                 <a href={votingUrl} target="_blank" rel="noreferrer">
                   {votingUrl}
                 </a>
               </div>
-              <Button 
-                type="primary" 
-                style={{ marginTop: "24px" }} 
+              <Button
+                type="primary"
+                style={{ marginTop: "24px" }}
                 onClick={() => {
                   setCreatedPollId(null);
                   form.resetFields();
                 }}
               >
-                {t("createNew", "Create Another Poll")}
+                {t("createNew")}
               </Button>
             </div>
           ) : (
-            
-            /* نموذج إنشاء الاستطلاع */
-            <Form 
-              form={form} 
-              onFinish={onFinish} 
+
+            /* واجهة إدخال بيانات الاستطلاع الجديد */
+            <Form
+              form={form}
+              onFinish={onFinish}
               layout="vertical"
-              initialValues={{ options: ["", ""] }} // نبدأ بخيارين فارغين افتراضياً
+              initialValues={{ options: ["", ""] }} // خيارين افتراضيين عند البداية
             >
+              {/* حقل السؤال */}
               <Form.Item
                 name="question"
                 label={t("form.question")}
@@ -85,8 +92,8 @@ function CreatePoll() {
                 <Input placeholder={t("form.placeholder_question")} />
               </Form.Item>
 
-              {/* القائمة الديناميكية للخيارات */}
-              <Form.List 
+              {/* القائمة الديناميكية لإضافة أو حذف خيارات الاستطلاع */}
+              <Form.List
                 name="options"
                 rules={[
                   {
@@ -101,8 +108,10 @@ function CreatePoll() {
                 {(fields, { add, remove }, { errors }) => (
                   <>
                     <div style={{ marginBottom: "8px" }}>
-                      <Text>{t("form.options", "Options")}</Text>
+                      {/* عنوان قسم الخيارات */}
+                      <Text>{t("form.options")}</Text>
                     </div>
+                    {/* حلقة تكرار لعرض كل خيار تم إضافته */}
                     {fields.map((field, index) => (
                       <Form.Item required={false} key={field.key} style={{ marginBottom: "12px" }}>
                         <Form.Item
@@ -117,8 +126,10 @@ function CreatePoll() {
                           ]}
                           noStyle
                         >
+                          {/* حقل إدخال نص الخيار مع رقم الخيار */}
                           <Input placeholder={`${t("form.placeholder_option")} ${index + 1}`} style={{ width: '90%' }} />
                         </Form.Item>
+                        {/* زر حذف الخيار - يظهر فقط إذا كان هناك أكثر من خيارين */}
                         {fields.length > 2 ? (
                           <MinusCircleOutlined
                             className="dynamic-delete-button"
@@ -128,6 +139,7 @@ function CreatePoll() {
                         ) : null}
                       </Form.Item>
                     ))}
+                    {/* زر إضافة خيار جديد إلى القائمة */}
                     <Form.Item>
                       <Button
                         type="dashed"
@@ -135,17 +147,19 @@ function CreatePoll() {
                         style={{ width: '90%' }}
                         icon={<PlusOutlined />}
                       >
-                        {t("button.add_option", "Add Option")}
+                        {t("button.add_option")}
                       </Button>
+                      {/* عرض أخطاء التحقق من الصحة الخاصة بقائمة الخيارات */}
                       <Form.ErrorList errors={errors} />
                     </Form.Item>
                   </>
                 )}
               </Form.List>
 
+              {/* زر إرسال النموذج لإنشاء الاستطلاع */}
               <Form.Item>
                 <Button type="primary" htmlType="submit" style={{ width: "100%" }}>
-                  {t("button.create_poll", "Create Poll & Generate QR")}
+                  {t("button.create_poll")}
                 </Button>
               </Form.Item>
             </Form>
